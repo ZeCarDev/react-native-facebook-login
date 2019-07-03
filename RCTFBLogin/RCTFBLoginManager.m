@@ -20,7 +20,7 @@
 {
   _fbLogin = [[RCTMFBLogin alloc] init];
   _defaultPermissions = @[@"email"];
-  _loginBehavior = FBSDKLoginBehaviorNative;
+  _loginBehavior = FBSDKLoginBehaviorBrowser;
 
   [_fbLogin setPermissions:_defaultPermissions];
   [_fbLogin setLoginBehavior:_loginBehavior];
@@ -49,10 +49,10 @@ RCT_EXPORT_MODULE();
       @"LoginNotFound": @"FBLoginLoginNotFoundEvent"
     },
     @"LoginBehaviors": @{
-      @"Web": [NSNumber numberWithInt:FBSDKLoginBehaviorWeb],
+      @"Web": [NSNumber numberWithInt:FBSDKLoginBehaviorBrowser],
       @"Browser": [NSNumber numberWithInt:FBSDKLoginBehaviorBrowser],
-      @"Native": [NSNumber numberWithInt:FBSDKLoginBehaviorNative],
-      @"SystemAccount": [NSNumber numberWithInt:FBSDKLoginBehaviorSystemAccount]
+      @"Native": [NSNumber numberWithInt:FBSDKLoginBehaviorBrowser],
+      @"SystemAccount": [NSNumber numberWithInt:FBSDKLoginBehaviorBrowser]
     }
   };
 }
@@ -119,7 +119,7 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
   } else if (result.isCancelled) {
     [self fireEvent:@"Cancel"];
   } else {
-    NSArray *permissions = [loginButton.readPermissions arrayByAddingObjectsFromArray:loginButton.publishPermissions];
+    NSArray *permissions = [loginButton.permissions arrayByAddingObjectsFromArray:loginButton.permissions];
     NSArray *missingPermissions = [self getMissingPermissions:permissions];
     NSArray *decliendPermissions = [result.declinedPermissions allObjects];
     NSDictionary *loginData = @{
