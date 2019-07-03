@@ -168,7 +168,7 @@ RCT_EXPORT_METHOD(loginWithPermissions:(NSArray *)permissions callback:(RCTRespo
   // No existing access token or missing permissions
   FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
   login.loginBehavior = [_loginBehavior unsignedIntValue];
-  [login logInWithReadPermissions:permissions fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+  [login logInWithPermissions:permissions fromViewController:nil handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
     if (error) {
       [self fireEvent:@"Error" withData:@{
         @"description": error.localizedDescription
